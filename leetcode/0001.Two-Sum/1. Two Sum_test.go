@@ -2,6 +2,7 @@ package leetcode
 
 import (
 	"fmt"
+	"log"
 	"testing"
 )
 
@@ -56,8 +57,21 @@ func Test_Problem1(t *testing.T) {
 	fmt.Printf("------------------------Leetcode Problem 1------------------------\n")
 
 	for _, q := range qs {
-		_, p := q.ans1, q.para1
-		fmt.Printf("【input】:%v       【output】:%v\n", p, twoSum(p.nums, p.target))
+		p := q.para1                    // 输入参数 包含数组明细和target
+		ans := twoSum(p.nums, p.target) // 计算出来的答案
+		if len(q.ans1.one) != len(ans) {  // q.ans1.one 期待答案 ans计算出来的答案
+			fmt.Printf("Not Pass【input】:%v       【output】:%v\n", p, ans)
+			log.Fatalf("**** Not Pass!!! ****")
+			return
+		}
+		for i, v := range q.ans1.one {
+			if v != ans[i] {
+				fmt.Printf("Not Pass【input】:%v       【output】:%v\n", p, ans)
+				log.Fatalf("**** Not Pass!!! ****")
+				return
+			}
+		}
+
 	}
-	fmt.Printf("\n\n\n")
+	fmt.Printf("------------------------Leetcode Problem 1 All Pass.------------------------\n")
 }
