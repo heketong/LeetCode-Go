@@ -2,6 +2,7 @@ package leetcode
 
 import (
 	"fmt"
+	"log"
 	"testing"
 
 	"github.com/halfrost/LeetCode-Go/structures"
@@ -68,6 +69,10 @@ func Test_Problem2(t *testing.T) {
 			para2{[]int{1, 8, 3}, []int{7, 1}},
 			ans2{[]int{8, 9, 3}},
 		},
+		{
+			para2{[]int{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, []int{5,6,4}},
+			ans2{[]int{6,6,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}},
+		},
 		// 如需多个测试，可以复制上方元素。
 	}
 
@@ -75,7 +80,19 @@ func Test_Problem2(t *testing.T) {
 
 	for _, q := range qs {
 		_, p := q.ans2, q.para2
-		fmt.Printf("【input】:%v       【output】:%v\n", p, structures.List2Ints(addTwoNumbers(structures.Ints2List(p.one), structures.Ints2List(p.another))))
+		ans := structures.List2Ints(addTwoNumbers(structures.Ints2List(p.one), structures.Ints2List(p.another))) // 计算出来的答案
+		if len(q.ans2.one) != len(ans) {  // q.ans1.one 期待答案 ans计算出来的答案
+			fmt.Printf("【input】:%v    expected result:%v   【output】:%v\n", p, q.ans2,ans)
+			log.Fatalf("**** Not Pass!!! ****")
+			return
+		}
+		for i, v := range q.ans2.one {
+			if v != ans[i] {
+				fmt.Printf("【input】:%v    expected result:%v   【output】:%v\n", p, q.ans2,ans)
+				log.Fatalf("**** Not Pass!!! ****")
+				return
+			}
+		}
 	}
 	fmt.Printf("\n\n\n")
 }
